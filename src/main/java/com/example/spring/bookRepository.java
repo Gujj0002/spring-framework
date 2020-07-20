@@ -20,7 +20,7 @@ public class bookRepository {
         BOOKS.add(new book(1004, "Black Panther"));
         BOOKS.add(new book(1005, "The Thor"));
 
-        for (book books : BOOKS){
+        for (book books : BOOKS) {
             bookMap.put(books.getId(), books);
         }
     }
