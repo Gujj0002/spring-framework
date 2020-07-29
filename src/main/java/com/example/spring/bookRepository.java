@@ -12,5 +12,7 @@ import java.util.Map;
 public interface bookRepository extends JpaRepository<book,Integer> {
 
 
+    void delete(Integer id);
 
+    book findOne(Integer id);
 }

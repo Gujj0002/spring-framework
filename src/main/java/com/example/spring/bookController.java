@@ -1,6 +1,7 @@
 package com.example.spring;
 
 import io.swagger.annotations.ApiOperation;
+import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,10 @@ public class bookController {
     @Autowired
     bookRepository repository;
 
+    public bookController(bookRepository repository) {
+        this.repository = repository;
+    }
+
 
     @ApiOperation("Get all book from list, return all books")
     @GetMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,19 +32,18 @@ public class bookController {
         return new ResponseEntity<Collection<book>>(repository.findAll(), HttpStatus.OK);
     }
 
-  /*  @ApiOperation("Get one book from list, return one books by id")
+   @ApiOperation("Get one book from list, return one books by id")
     @GetMapping(value = "/books/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<book> getOne(@PathVariable Integer id) {
-        book Book;
-        Book = repository.findOne(id);
+        book Book = repository.findOne(id);
         return new ResponseEntity<book>(Book, HttpStatus.OK);
-    }*/
+    }
 
     @ApiOperation("Create a book into list, return all books")
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createOrAdd(@RequestBody(required = true) book Book) {
         repository.save(Book);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ApiOperation("Update a list, return all books")
@@ -53,10 +57,10 @@ public class bookController {
         return new ResponseEntity<>(Book, HttpStatus.OK);
     }
 
-   /* @ApiOperation("Delete book from list by id, return all books.")
+    @ApiOperation("Delete book from list by id, return all books.")
     @DeleteMapping(value = "/books/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
          repository.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+    }
 }
